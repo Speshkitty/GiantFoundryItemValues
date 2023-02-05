@@ -5,9 +5,7 @@ import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.ClientTick;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
@@ -40,13 +38,14 @@ public class ItemBarValuesPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		overlayManager.add(overlay);
-		log.info("Giant Foundry Bar Value loaded!");
+		log.info("Giant Foundry Bar Value started!");
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		//log.info("Example stopped!");
+		overlayManager.remove(overlay);
+		log.info("Giant Foundry Bar Value stopped!");
 	}
 
 	protected Logger getLogger(){
@@ -63,18 +62,6 @@ public class ItemBarValuesPlugin extends Plugin
 	private boolean TileIsInFoundry(WorldPoint tile) {
 		return giantsFoundryArea.contains(new Point(tile.getX(), tile.getY()));
 	}
-
- 	private WorldPoint lastPoint = null;
-	@Subscribe
-	public void onClientTick(ClientTick clientTick){
-		WorldPoint current = client.getLocalPlayer().getWorldLocation();
-
-		if(lastPoint == null || !lastPoint.equals(current)){
-			lastPoint = current;
-			//client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You are in " + lastPoint, null);
-		}
-	}
-
 
 	@Provides
 	ItemBarValuesConfig provideConfig(ConfigManager configManager)
