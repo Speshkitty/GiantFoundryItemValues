@@ -1,8 +1,10 @@
 package com.speshkitty.giantsfoundryitemvalues;
 
 import net.runelite.client.config.Config;
+import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
+@ConfigGroup("giants-foundry-item-values")
 public interface ItemBarValuesConfig extends Config
 {
 	@ConfigItem(
